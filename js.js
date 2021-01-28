@@ -1,6 +1,14 @@
 const grid = document.querySelector("#grid");
 const root = document.querySelector(":root");
+const drawn = document.querySelector(".drawn");
+const resetBtn = document.querySelector("#reset");
+let resolution = 16;
 
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
 
 function generateSquares(side) {
     let num = Math.pow(side, 2);
@@ -13,7 +21,25 @@ function generateSquares(side) {
     root.style.setProperty("--num", side);
 }
 
-generateSquares(16);
+function reset() {
+    removeAllChildNodes(grid);
+    generateSquares(resolution);
+}
+
+generateSquares(resolution);
+
+
+resetBtn.addEventListener("click", function (e) {
+    console.log(e);
+    reset();
+    const squares = document.querySelectorAll(".square");
+    squares.forEach((div) => {
+        div.addEventListener("mouseenter", () => {
+            div.className = "drawn";
+        });
+
+    });
+});
 
 const squares = document.querySelectorAll(".square");
 squares.forEach((div) => {
@@ -21,4 +47,4 @@ squares.forEach((div) => {
         div.className = "drawn";
     });
 
-});
+});  
