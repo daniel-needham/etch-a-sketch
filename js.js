@@ -38,11 +38,11 @@ function reset() {
 
 function toggleRes() {
     let toggleRes = [8, 16, 24, 32];
-    if (index === toggleRes.length) {
-        index = 0;
+    if (index === toggleRes.length -1) {
+        index = -1;
     };
-    resolution = toggleRes[index];
     index++;
+    resolution = toggleRes[index];
 }
 
 generateSquares(resolution);
