@@ -2,7 +2,9 @@ const grid = document.querySelector("#grid");
 const root = document.querySelector(":root");
 const drawn = document.querySelector(".drawn");
 const resetBtn = document.querySelector("#reset");
-let resolution = 16;
+const toggle = document.querySelector("#toggle");
+let index = 0;
+let resolution = 8;
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -16,9 +18,17 @@ function generateSquares(side) {
         const square = document.createElement("div");
         square.className = "square";
         grid.appendChild(square);
-        console.log(i);
     }
     root.style.setProperty("--num", side);
+}
+
+function generateHover() {
+    const squares = document.querySelectorAll(".square");
+    squares.forEach((div) => {
+        div.addEventListener("mouseenter", () => {
+            div.className = "drawn";
+        });
+    });
 }
 
 function reset() {
@@ -26,25 +36,29 @@ function reset() {
     generateSquares(resolution);
 }
 
+function toggleRes() {
+    let toggleRes = [8, 16, 24, 32];
+    if (index === toggleRes.length) {
+        index = 0;
+    };
+    resolution = toggleRes[index];
+    index++;
+}
+
 generateSquares(resolution);
 
 
-resetBtn.addEventListener("click", function (e) {
-    console.log(e);
+resetBtn.addEventListener("click", () => {
     reset();
-    const squares = document.querySelectorAll(".square");
-    squares.forEach((div) => {
-        div.addEventListener("mouseenter", () => {
-            div.className = "drawn";
-        });
-
-    });
+    generateHover();
 });
 
-const squares = document.querySelectorAll(".square");
-squares.forEach((div) => {
-    div.addEventListener("mouseenter", () => {
-        div.className = "drawn";
-    });
+toggle.addEventListener("click", () => {
+    toggleRes();
+    reset();
+    generateHover();
+});
 
-});  
+
+
+generateHover();
